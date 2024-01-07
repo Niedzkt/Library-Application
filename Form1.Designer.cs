@@ -30,6 +30,7 @@
         {
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            checkBoxAutoRefresh = new CheckBox();
             UserPhoneCheckBox = new CheckBox();
             UserSurnameCheckBox = new CheckBox();
             UserNameCheckBox = new CheckBox();
@@ -48,13 +49,29 @@
             tabPage3 = new TabPage();
             tabPage4 = new TabPage();
             tabPage5 = new TabPage();
+            checkBoxWorkerAutoRefresh = new CheckBox();
+            checkBoxWorkerPosition = new CheckBox();
+            checkBoxWorkerSurname = new CheckBox();
+            checkBoxWorkerName = new CheckBox();
+            buttonShowWorkers = new Button();
+            dataGridViewWorker = new DataGridView();
+            button4 = new Button();
+            button3 = new Button();
+            button2 = new Button();
+            labelWorkerPosition = new Label();
+            textBoxWorkerPosition = new TextBox();
+            labelWorkerSurname = new Label();
+            textBoxWorkerSurname = new TextBox();
+            labelWorkerName = new Label();
+            textBoxWorkerName = new TextBox();
             tabPage6 = new TabPage();
             tabPage7 = new TabPage();
             tabPage8 = new TabPage();
-            checkBoxAutoRefresh = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewWorker).BeginInit();
             SuspendLayout();
             // 
             // tabControl1
@@ -97,6 +114,17 @@
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Czytelnik";
             tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxAutoRefresh
+            // 
+            checkBoxAutoRefresh.AutoSize = true;
+            checkBoxAutoRefresh.Location = new Point(266, 509);
+            checkBoxAutoRefresh.Name = "checkBoxAutoRefresh";
+            checkBoxAutoRefresh.Size = new Size(172, 19);
+            checkBoxAutoRefresh.TabIndex = 14;
+            checkBoxAutoRefresh.Text = "Automatyczne Odświeżanie";
+            checkBoxAutoRefresh.UseVisualStyleBackColor = true;
+            checkBoxAutoRefresh.CheckedChanged += checkBoxAutoRefresh_CheckedChanged;
             // 
             // UserPhoneCheckBox
             // 
@@ -159,6 +187,7 @@
             DeleteUserButton.TabIndex = 8;
             DeleteUserButton.Text = "Usuń Użytkownika";
             DeleteUserButton.UseVisualStyleBackColor = true;
+            DeleteUserButton.Click += DeleteUserButton_Click;
             // 
             // SearchUserButton
             // 
@@ -168,6 +197,7 @@
             SearchUserButton.TabIndex = 7;
             SearchUserButton.Text = "Wyszukaj Użytkownika";
             SearchUserButton.UseVisualStyleBackColor = true;
+            SearchUserButton.Click += SearchUserButton_Click;
             // 
             // UserPhoneLabel
             // 
@@ -256,11 +286,26 @@
             tabPage4.Padding = new Padding(3);
             tabPage4.Size = new Size(886, 545);
             tabPage4.TabIndex = 3;
-            tabPage4.Text = "Wypozycz";
+            tabPage4.Text = "Wypozyczenia";
             tabPage4.UseVisualStyleBackColor = true;
             // 
             // tabPage5
             // 
+            tabPage5.Controls.Add(checkBoxWorkerAutoRefresh);
+            tabPage5.Controls.Add(checkBoxWorkerPosition);
+            tabPage5.Controls.Add(checkBoxWorkerSurname);
+            tabPage5.Controls.Add(checkBoxWorkerName);
+            tabPage5.Controls.Add(buttonShowWorkers);
+            tabPage5.Controls.Add(dataGridViewWorker);
+            tabPage5.Controls.Add(button4);
+            tabPage5.Controls.Add(button3);
+            tabPage5.Controls.Add(button2);
+            tabPage5.Controls.Add(labelWorkerPosition);
+            tabPage5.Controls.Add(textBoxWorkerPosition);
+            tabPage5.Controls.Add(labelWorkerSurname);
+            tabPage5.Controls.Add(textBoxWorkerSurname);
+            tabPage5.Controls.Add(labelWorkerName);
+            tabPage5.Controls.Add(textBoxWorkerName);
             tabPage5.Location = new Point(4, 24);
             tabPage5.Name = "tabPage5";
             tabPage5.Padding = new Padding(3);
@@ -268,6 +313,145 @@
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Pracownik";
             tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxWorkerAutoRefresh
+            // 
+            checkBoxWorkerAutoRefresh.AutoSize = true;
+            checkBoxWorkerAutoRefresh.Location = new Point(266, 509);
+            checkBoxWorkerAutoRefresh.Name = "checkBoxWorkerAutoRefresh";
+            checkBoxWorkerAutoRefresh.Size = new Size(172, 19);
+            checkBoxWorkerAutoRefresh.TabIndex = 21;
+            checkBoxWorkerAutoRefresh.Text = "Automatyczne Odświeżanie";
+            checkBoxWorkerAutoRefresh.UseVisualStyleBackColor = true;
+            checkBoxWorkerAutoRefresh.CheckedChanged += checkBoxWorkerAutoRefresh_CheckedChanged;
+            // 
+            // checkBoxWorkerPosition
+            // 
+            checkBoxWorkerPosition.AutoSize = true;
+            checkBoxWorkerPosition.Location = new Point(581, 509);
+            checkBoxWorkerPosition.Name = "checkBoxWorkerPosition";
+            checkBoxWorkerPosition.Size = new Size(86, 19);
+            checkBoxWorkerPosition.TabIndex = 20;
+            checkBoxWorkerPosition.Text = "Stanowisko";
+            checkBoxWorkerPosition.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxWorkerSurname
+            // 
+            checkBoxWorkerSurname.AutoSize = true;
+            checkBoxWorkerSurname.Location = new Point(499, 509);
+            checkBoxWorkerSurname.Name = "checkBoxWorkerSurname";
+            checkBoxWorkerSurname.Size = new Size(76, 19);
+            checkBoxWorkerSurname.TabIndex = 19;
+            checkBoxWorkerSurname.Text = "Nazwisko";
+            checkBoxWorkerSurname.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxWorkerName
+            // 
+            checkBoxWorkerName.AutoSize = true;
+            checkBoxWorkerName.Location = new Point(444, 509);
+            checkBoxWorkerName.Name = "checkBoxWorkerName";
+            checkBoxWorkerName.Size = new Size(49, 19);
+            checkBoxWorkerName.TabIndex = 18;
+            checkBoxWorkerName.Text = "Imię";
+            checkBoxWorkerName.UseVisualStyleBackColor = true;
+            // 
+            // buttonShowWorkers
+            // 
+            buttonShowWorkers.Location = new Point(698, 505);
+            buttonShowWorkers.Name = "buttonShowWorkers";
+            buttonShowWorkers.Size = new Size(164, 23);
+            buttonShowWorkers.TabIndex = 17;
+            buttonShowWorkers.Text = "Wyświetl Pracowników";
+            buttonShowWorkers.UseVisualStyleBackColor = true;
+            buttonShowWorkers.Click += buttonShowWorkers_Click;
+            // 
+            // dataGridViewWorker
+            // 
+            dataGridViewWorker.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewWorker.GridColor = SystemColors.ControlLight;
+            dataGridViewWorker.Location = new Point(266, 21);
+            dataGridViewWorker.Name = "dataGridViewWorker";
+            dataGridViewWorker.RowTemplate.Height = 25;
+            dataGridViewWorker.Size = new Size(596, 478);
+            dataGridViewWorker.TabIndex = 16;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(15, 196);
+            button4.Name = "button4";
+            button4.Size = new Size(154, 23);
+            button4.TabIndex = 15;
+            button4.Text = "Usuń Pracownika";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(15, 167);
+            button3.Name = "button3";
+            button3.Size = new Size(154, 23);
+            button3.TabIndex = 14;
+            button3.Text = "Wyszukaj Pracownika";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(15, 138);
+            button2.Name = "button2";
+            button2.Size = new Size(154, 23);
+            button2.TabIndex = 13;
+            button2.Text = "Dodaj Pracownika";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // labelWorkerPosition
+            // 
+            labelWorkerPosition.AutoSize = true;
+            labelWorkerPosition.Location = new Point(15, 91);
+            labelWorkerPosition.Name = "labelWorkerPosition";
+            labelWorkerPosition.Size = new Size(67, 15);
+            labelWorkerPosition.TabIndex = 12;
+            labelWorkerPosition.Text = "Stanowisko";
+            // 
+            // textBoxWorkerPosition
+            // 
+            textBoxWorkerPosition.Location = new Point(15, 109);
+            textBoxWorkerPosition.Name = "textBoxWorkerPosition";
+            textBoxWorkerPosition.Size = new Size(154, 23);
+            textBoxWorkerPosition.TabIndex = 11;
+            // 
+            // labelWorkerSurname
+            // 
+            labelWorkerSurname.AutoSize = true;
+            labelWorkerSurname.Location = new Point(15, 47);
+            labelWorkerSurname.Name = "labelWorkerSurname";
+            labelWorkerSurname.Size = new Size(57, 15);
+            labelWorkerSurname.TabIndex = 10;
+            labelWorkerSurname.Text = "Nazwisko";
+            // 
+            // textBoxWorkerSurname
+            // 
+            textBoxWorkerSurname.Location = new Point(15, 65);
+            textBoxWorkerSurname.Name = "textBoxWorkerSurname";
+            textBoxWorkerSurname.Size = new Size(154, 23);
+            textBoxWorkerSurname.TabIndex = 9;
+            // 
+            // labelWorkerName
+            // 
+            labelWorkerName.AutoSize = true;
+            labelWorkerName.Location = new Point(15, 3);
+            labelWorkerName.Name = "labelWorkerName";
+            labelWorkerName.Size = new Size(30, 15);
+            labelWorkerName.TabIndex = 8;
+            labelWorkerName.Text = "Imię";
+            // 
+            // textBoxWorkerName
+            // 
+            textBoxWorkerName.Location = new Point(15, 21);
+            textBoxWorkerName.Name = "textBoxWorkerName";
+            textBoxWorkerName.Size = new Size(154, 23);
+            textBoxWorkerName.TabIndex = 7;
             // 
             // tabPage6
             // 
@@ -299,17 +483,6 @@
             tabPage8.Text = "Filia";
             tabPage8.UseVisualStyleBackColor = true;
             // 
-            // checkBoxAutoRefresh
-            // 
-            checkBoxAutoRefresh.AutoSize = true;
-            checkBoxAutoRefresh.Location = new Point(266, 509);
-            checkBoxAutoRefresh.Name = "checkBoxAutoRefresh";
-            checkBoxAutoRefresh.Size = new Size(172, 19);
-            checkBoxAutoRefresh.TabIndex = 14;
-            checkBoxAutoRefresh.Text = "Automatyczne Odświeżanie";
-            checkBoxAutoRefresh.UseVisualStyleBackColor = true;
-            checkBoxAutoRefresh.CheckedChanged += checkBoxAutoRefresh_CheckedChanged;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -322,6 +495,9 @@
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            tabPage5.ResumeLayout(false);
+            tabPage5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewWorker).EndInit();
             ResumeLayout(false);
         }
 
@@ -351,5 +527,20 @@
         private CheckBox UserSurnameCheckBox;
         private CheckBox UserNameCheckBox;
         private CheckBox checkBoxAutoRefresh;
+        private Label labelWorkerPosition;
+        private TextBox textBoxWorkerPosition;
+        private Label labelWorkerSurname;
+        private TextBox textBoxWorkerSurname;
+        private Label labelWorkerName;
+        private TextBox textBoxWorkerName;
+        private Button button4;
+        private Button button3;
+        private Button button2;
+        private CheckBox checkBoxWorkerAutoRefresh;
+        private CheckBox checkBoxWorkerPosition;
+        private CheckBox checkBoxWorkerSurname;
+        private CheckBox checkBoxWorkerName;
+        private Button buttonShowWorkers;
+        private DataGridView dataGridViewWorker;
     }
 }
