@@ -244,6 +244,7 @@ namespace LibraryApp
             }
         }
 
+
         public static DataTable SearchAutor(string name, string surname, string dateOfBirth)
         {
             string query = "SELECT imie, nazwisko, data_urodzenia FROM AUTOR WHERE imie=:name AND nazwisko=:surname AND data_urodzenia=:dateOfBirth";
