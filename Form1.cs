@@ -2,13 +2,11 @@ namespace LibraryApp
 {
     public partial class Form1 : Form
     {
-        private readonly DatabaseAccess dbAccess;
         private System.Windows.Forms.Timer refreshTimer;
 
-        public Form1(DatabaseAccess dbAccess)
+        public Form1()
         {
             InitializeComponent();
-            this.dbAccess = dbAccess;
             this.dataGridView1.BackgroundColor = Color.White;
             this.tabPage1.BackColor = Color.Gray;
             this.tabPage2.BackColor = Color.Blue;
@@ -48,7 +46,7 @@ namespace LibraryApp
                     query = "SELECT imie, nazwisko, numer_telefonu FROM CZYTELNIK";
                 }
 
-                var dataTable = dbAccess.ExecuteQuery(query);
+                var dataTable = DatabaseAccess.ExecuteQuery(query);
                 dataGridView1.DataSource = dataTable;
             }
 
@@ -65,7 +63,7 @@ namespace LibraryApp
                     query = "SELECT imie, nazwisko, stanowisko FROM PRACOWNIK;";
                 }
 
-                var dataTable = dbAccess.ExecuteQuery(query);
+                var dataTable = DatabaseAccess.ExecuteQuery(query);
                 dataGridViewWorker.DataSource = dataTable;
             }
         }
@@ -91,7 +89,7 @@ namespace LibraryApp
             string surname = UserSurnameTextBox.Text;
             string phoneNumber = UserPhoneTextBox.Text;
 
-            dbAccess.AddUser(name, surname, phoneNumber);
+            DatabaseAccess.AddUser(name, surname, phoneNumber);
 
             RefreshData(null, null);
         }
@@ -126,7 +124,7 @@ namespace LibraryApp
             string surname = UserSurnameTextBox.Text;
             string phoneNumber = UserPhoneTextBox.Text;
 
-            dbAccess.DeleteUser(name, surname, phoneNumber);
+            DatabaseAccess.DeleteUser(name, surname, phoneNumber);
 
             RefreshData(null, null);
         }
@@ -137,7 +135,7 @@ namespace LibraryApp
             string surname = UserSurnameTextBox.Text;
             string phoneNumber = UserPhoneTextBox.Text;
 
-            var dataTable = dbAccess.SearchUser(name, surname, phoneNumber);
+            var dataTable = DatabaseAccess.SearchUser(name, surname, phoneNumber);
             dataGridView1.DataSource = dataTable;
         }
 
@@ -147,7 +145,7 @@ namespace LibraryApp
             string surname = textBoxWorkerSurname.Text;
             string position = textBoxWorkerPosition.Text;
 
-            dbAccess.AddWorker(name, surname, position);
+            DatabaseAccess.AddWorker(name, surname, position);
 
             RefreshData(null, null);
         }
@@ -158,7 +156,7 @@ namespace LibraryApp
             string surname = textBoxWorkerSurname.Text;
             string position = textBoxWorkerPosition.Text;
 
-            var dataTable = dbAccess.SearchWorker(name, surname, position);
+            var dataTable = DatabaseAccess.SearchWorker(name, surname, position);
             dataGridViewWorker.DataSource = dataTable;
         }
 
@@ -168,7 +166,7 @@ namespace LibraryApp
             string surname = textBoxWorkerSurname.Text;
             string position = textBoxWorkerPosition.Text;
 
-            dbAccess.DeleteWorker(name, surname, position);
+            DatabaseAccess.DeleteWorker(name, surname, position);
 
             RefreshData(null, null);
         }
@@ -185,6 +183,11 @@ namespace LibraryApp
                 refreshTimer.Start();
             }
             else { refreshTimer.Stop(); }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

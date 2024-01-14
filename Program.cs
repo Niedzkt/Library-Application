@@ -7,10 +7,7 @@ namespace LibraryApp
         {
             ApplicationConfiguration.Initialize();
 
-            string connectionString = "Server=localhost; Port=3306; Database=library; Uid=root; Pwd=;";
-            DatabaseAccess dbAccess = new DatabaseAccess(connectionString);
-
-            Application.Run(new Form1(dbAccess));
+            Application.Run(new Form1());
         }
     }
 }
