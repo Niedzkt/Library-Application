@@ -266,5 +266,131 @@ namespace LibraryApp
                 }
             }
         }
+
+        public static void AddBook(string name, string year, string category, string amount)
+        {
+
+            string query = "INSERT INTO KSIAZKA (tytul, rok_wydania, kategoria, dostepnosc) VALUES (:name, :year, :category, :amount)";
+
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                using (OracleCommand command = new OracleCommand(query, connection))
+                {
+
+                    command.Parameters.Add("name", OracleDbType.Varchar2).Value = name;
+                    command.Parameters.Add("year", OracleDbType.Varchar2).Value = year;
+                    command.Parameters.Add("category", OracleDbType.Varchar2).Value = category;
+                    command.Parameters.Add("amount", OracleDbType.Varchar2).Value = amount;
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void DeleteBook(string name, string year, string category, string amount)
+        {
+            string query = "DELETE FROM KSIAZKA WHERE tytul=:name AND rok_wydania=:year AND kategoria=:category AND dostepnosc=:amount";
+
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                using (OracleCommand command = new OracleCommand(query, connection))
+                {
+                    command.Parameters.Add("name", OracleDbType.Varchar2).Value = name;
+                    command.Parameters.Add("year", OracleDbType.Varchar2).Value = year;
+                    command.Parameters.Add("category", OracleDbType.Varchar2).Value = category;
+                    command.Parameters.Add("amount", OracleDbType.Varchar2).Value = amount;
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static DataTable SearchBook(string name, string year, string category, string amount)
+        {
+            string query = "SELECT tytul, rok_wydania, kategoria, dostepnosc FROM KSIAZKA WHERE tytul=:name AND rok_wydania=:year AND kategoria=:category AND dostepnosc=:amount";
+
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                using (OracleCommand command = new OracleCommand(query, connection))
+                {
+                    command.Parameters.Add("name", OracleDbType.Varchar2).Value = name;
+                    command.Parameters.Add("year", OracleDbType.Varchar2).Value = year;
+                    command.Parameters.Add("category", OracleDbType.Varchar2).Value = category;
+                    command.Parameters.Add("amount", OracleDbType.Varchar2).Value = amount;
+                    connection.Open();
+
+                    using (OracleDataAdapter adapter = new OracleDataAdapter(command))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+                        return dataTable;
+                    }
+                }
+            }
+        }
+
+        public static void BorrowBook(
+            string phoneNumber, 
+            string name, 
+            string surname, 
+            string bookName, 
+            DateTime borrowDate, 
+            DateTime returnDate)
+        {
+            string query = @"INSERT INTO wypozyczenie (data_wypozyczenia, data_zwrotu, czytelnik_id_czytelnika, ksiazka_id_ksiazki)
+             VALUES (:borrowDate, :returnDate, 
+                     (SELECT id_czytelnika FROM czytelnik WHERE numer_telefonu = :phoneNumber AND imie = :name AND nazwisko = :surname), 
+                     (SELECT id_ksiazki FROM ksiazka WHERE tytul = :bookName))";
+
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                using (OracleCommand command = new OracleCommand(query, connection))
+                {
+                    command.Parameters.Add("borrowDate", OracleDbType.Date).Value = borrowDate;
+                    command.Parameters.Add("returnDate", OracleDbType.Date).Value = returnDate;
+                    command.Parameters.Add("phoneNumber", OracleDbType.Varchar2).Value = phoneNumber;
+                    command.Parameters.Add("name", OracleDbType.Varchar2).Value = name;
+                    command.Parameters.Add("surname", OracleDbType.Varchar2).Value = surname;
+                    command.Parameters.Add("bookName", OracleDbType.Varchar2).Value = bookName;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static DataTable ShowBorrows()
+        {
+            string query = @"SELECT w.id_wypozyczenia, c.imie, c.nazwisko, c.numer_telefonu, w.data_wypozyczenia, k.tytul
+                     FROM czytelnik c
+                     JOIN wypozyczenie w ON c.id_czytelnika = w.czytelnik_id_czytelnika
+                     JOIN ksiazka k ON w.ksiazka_id_ksiazki = k.id_ksiazki";
+
+            DataTable dataTable = new DataTable();
+
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                using (OracleCommand command = new OracleCommand(query, connection))
+                {
+                    using (OracleDataAdapter adapter = new OracleDataAdapter(command))
+                    {
+                        connection.Open();
+
+                        adapter.Fill(dataTable);
+                    }
+                }
+            }
+
+            return dataTable;
+        }
+
+        public static void ZwrocKsiazke(int borrowId, DateTime returnDate)
+        {
+            string query = @"UPDATE wypozyczenie SET data_zwrotu = :returnDate WHERE id_wypozyczenia = :idWypozyczenia";
+
+            // Tutaj kod do wykonania zapytania z wykorzystaniem OracleCommand, przekazując odpowiednie parametry
+        }
+
+
     }
 }

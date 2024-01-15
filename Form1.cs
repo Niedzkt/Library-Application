@@ -8,8 +8,9 @@ namespace LibraryApp
         {
             InitializeComponent();
             this.dataGridView1.BackgroundColor = Color.White;
-            this.tabPage1.BackColor = Color.Gray;
-            this.tabPage2.BackColor = Color.Blue;
+            this.dataGridViewBook.BackgroundColor = Color.White;
+            this.dataGridViewWorker.BackgroundColor = Color.White;
+            this.dataGridViewBorrow.BackgroundColor = Color.White;
             InitializeRefreshTimer();
         }
 
@@ -60,11 +61,35 @@ namespace LibraryApp
 
                 if (!checkBoxWorkerName.Checked && !checkBoxWorkerSurname.Checked && !checkBoxWorkerPosition.Checked)
                 {
-                    query = "SELECT imie, nazwisko, stanowisko FROM PRACOWNIK;";
+                    query = "SELECT imie, nazwisko, stanowisko FROM PRACOWNIK";
                 }
 
                 var dataTable = DatabaseAccess.ExecuteQuery(query);
                 dataGridViewWorker.DataSource = dataTable;
+            }
+
+            if (tabControl1.SelectedTab == tabPage2)
+            {
+                string query = "SELECT ";
+                if (checkBoxBookName.Checked) query += "tytul, ";
+                if (checkBoxBookYear.Checked) query += "rok_wydania, ";
+                if (checkBoxBookCategory.Checked) query += "kategoria, ";
+                if (checkBoxBookAmount.Checked) query += "dostepnosc, ";
+                query = query.TrimEnd(',', ' ') + " FROM KSIAZKA";
+
+                if (!checkBoxBookName.Checked && !checkBoxBookYear.Checked && !checkBoxBookCategory.Checked && !checkBoxBookAmount.Checked)
+                {
+                    query = "SELECT tytul, rok_wydania, kategoria, dostepnosc FROM KSIAZKA";
+                }
+
+                var dataTable = DatabaseAccess.ExecuteQuery(query);
+                dataGridViewBook.DataSource = dataTable;
+            }
+
+            if (tabControl1.SelectedTab == tabPage4)
+            {
+                var dataTable = DatabaseAccess.ShowBorrows();
+                dataGridViewBorrow.DataSource = dataTable;
             }
         }
 
@@ -188,6 +213,100 @@ namespace LibraryApp
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void buttonBookAddBook_Click(object sender, EventArgs e)
+        {
+            string name = textBoxBookName.Text;
+            string year = textBoxBookYear.Text;
+            string category = textBoxBookCategory.Text;
+            string amount = textBoxBookAmount.Text;
+            string publisher = textBoxBookFKPublisher.Text;
+
+
+            DatabaseAccess.AddBook(name, year, category, amount);
+
+            RefreshData(null, null);
+        }
+
+        private void buttonBookSearchBook_Click(object sender, EventArgs e)
+        {
+            string name = textBoxBookName.Text;
+            string year = textBoxBookYear.Text;
+            string category = textBoxBookCategory.Text;
+            string amount = textBoxBookAmount.Text;
+            string publisher = textBoxBookFKPublisher.Text;
+
+
+            DatabaseAccess.SearchBook(name, year, category, amount);
+        }
+
+        private void buttonBookDeleteBook_Click(object sender, EventArgs e)
+        {
+            string name = textBoxBookName.Text;
+            string year = textBoxBookYear.Text;
+            string category = textBoxBookCategory.Text;
+            string amount = textBoxBookAmount.Text;
+            string publisher = textBoxBookFKPublisher.Text;
+
+
+            DatabaseAccess.DeleteBook(name, year, category, amount);
+
+            RefreshData(null, null);
+        }
+
+        private void buttonBookShowBooks_Click(object sender, EventArgs e)
+        {
+            RefreshData(null, null);
+        }
+
+        private void checkBoxBookRefresh_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxBookRefresh.Checked)
+            {
+                refreshTimer.Start();
+            }
+            else { refreshTimer.Stop(); }
+        }
+
+        private void dataGridViewBorrow_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void buttonBorrowShowBorrows_Click(object sender, EventArgs e)
+        {
+            RefreshData(null, null);
+        }
+
+        private void buttonBorrowBorrowBook_Click(object sender, EventArgs e)
+        {
+            string name = textBoxBorrowCustomerName.Text;
+            string surname = textBoxBorrowCustomerSurname.Text;  
+            string phoneNumber = textBoxBorrowCustomerPhone.Text;  
+            string bookName = textBoxBorrowBookName.Text;        
+
+            DateTime borrowDate;
+            DateTime returnDate;
+
+            bool isBorrowDateValid = DateTime.TryParse(textBoxBorrowDate.Text, out borrowDate);
+            bool isReturnDateValid = DateTime.TryParse(textBoxBorrowReturnDate.Text, out returnDate);
+
+            if (!isBorrowDateValid)
+            {
+                MessageBox.Show("Data wypo¿yczenia jest nieprawid³owa. Proszê wprowadziæ datê w formacie 'RRRR-MM-DD'.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            if (!isReturnDateValid)
+            {
+                MessageBox.Show("Data zwrotu jest nieprawid³owa. Proszê wprowadziæ datê w formacie 'RRRR-MM-DD'.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
+
+            DatabaseAccess.BorrowBook(phoneNumber, name, surname, bookName, borrowDate, returnDate);
+
+            RefreshData(null, null);
         }
     }
 }
