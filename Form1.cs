@@ -446,5 +446,23 @@ namespace LibraryApp
             var dataTable = DatabaseAccess.GetAuthorAndBookDetails();
             dataGridViewAutor.DataSource = dataTable;
         }
+
+        private void buttonBookGroupByYear_Click(object sender, EventArgs e)
+        {
+            string year = textBoxBookYear.Text;
+            var dataTable = DatabaseAccess.GetBooksCountByYear(year);
+            dataGridViewBook.DataSource = dataTable;
+        }
+
+        private void buttonAutorAVGCheck_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonBorrowGetTotalBorrows_Click(object sender, EventArgs e)
+        {
+            var dataTable = DatabaseAccess.GetTotalBorrowsByReader();
+            dataGridViewBorrow.DataSource = dataTable;
+        }
     }
 }

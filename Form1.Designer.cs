@@ -61,6 +61,8 @@
             labelWorkerSurname = new Label();
             labelWorkerName = new Label();
             tabPage4 = new TabPage();
+            buttonBorrowGetTotalBorrows = new Button();
+            label17 = new Label();
             buttonBorrowNewReturnDate = new Button();
             label9 = new Label();
             textBoxRealReturnDate = new TextBox();
@@ -72,10 +74,6 @@
             textBoxBorrowBookName = new TextBox();
             label2 = new Label();
             label12 = new Label();
-            checkBox9 = new CheckBox();
-            checkBox10 = new CheckBox();
-            checkBox11 = new CheckBox();
-            checkBox12 = new CheckBox();
             buttonBorrowShowBorrows = new Button();
             dataGridViewBorrow = new DataGridView();
             buttonBorrowDeleteBorrow = new Button();
@@ -87,6 +85,7 @@
             label8 = new Label();
             labelBorrowCustomer = new Label();
             tabPage3 = new TabPage();
+            buttonAutorSearchWithBooks = new Button();
             buttonDeleteBookFromAutor = new Button();
             buttonAddBookToAutor = new Button();
             label10 = new Label();
@@ -109,6 +108,8 @@
             label5 = new Label();
             label6 = new Label();
             tabPage2 = new TabPage();
+            label16 = new Label();
+            buttonBookGroupByYear = new Button();
             checkBoxBookRefresh = new CheckBox();
             labelBookFKPublisher = new Label();
             textBoxBookFKPublisher = new TextBox();
@@ -146,7 +147,6 @@
             UserSurnameLabel = new Label();
             UserNameLabel = new Label();
             tabControl1 = new TabControl();
-            buttonAutorSearchWithBooks = new Button();
             tabPage7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView6).BeginInit();
             tabPage5.SuspendLayout();
@@ -487,6 +487,8 @@
             // 
             // tabPage4
             // 
+            tabPage4.Controls.Add(buttonBorrowGetTotalBorrows);
+            tabPage4.Controls.Add(label17);
             tabPage4.Controls.Add(buttonBorrowNewReturnDate);
             tabPage4.Controls.Add(label9);
             tabPage4.Controls.Add(textBoxRealReturnDate);
@@ -498,10 +500,6 @@
             tabPage4.Controls.Add(textBoxBorrowBookName);
             tabPage4.Controls.Add(label2);
             tabPage4.Controls.Add(label12);
-            tabPage4.Controls.Add(checkBox9);
-            tabPage4.Controls.Add(checkBox10);
-            tabPage4.Controls.Add(checkBox11);
-            tabPage4.Controls.Add(checkBox12);
             tabPage4.Controls.Add(buttonBorrowShowBorrows);
             tabPage4.Controls.Add(dataGridViewBorrow);
             tabPage4.Controls.Add(buttonBorrowDeleteBorrow);
@@ -519,6 +517,25 @@
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Wypozyczenia";
             tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // buttonBorrowGetTotalBorrows
+            // 
+            buttonBorrowGetTotalBorrows.Location = new Point(20, 467);
+            buttonBorrowGetTotalBorrows.Name = "buttonBorrowGetTotalBorrows";
+            buttonBorrowGetTotalBorrows.Size = new Size(154, 23);
+            buttonBorrowGetTotalBorrows.TabIndex = 42;
+            buttonBorrowGetTotalBorrows.Text = "Sprawdź";
+            buttonBorrowGetTotalBorrows.UseVisualStyleBackColor = true;
+            buttonBorrowGetTotalBorrows.Click += buttonBorrowGetTotalBorrows_Click;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(20, 449);
+            label17.Name = "label17";
+            label17.Size = new Size(237, 15);
+            label17.TabIndex = 41;
+            label17.Text = "Ilość wypożyczeń dla każdego z czytelników";
             // 
             // buttonBorrowNewReturnDate
             // 
@@ -609,46 +626,6 @@
             label12.Size = new Size(32, 15);
             label12.TabIndex = 31;
             label12.Text = "Tytuł";
-            // 
-            // checkBox9
-            // 
-            checkBox9.AutoSize = true;
-            checkBox9.Location = new Point(271, 516);
-            checkBox9.Name = "checkBox9";
-            checkBox9.Size = new Size(172, 19);
-            checkBox9.TabIndex = 29;
-            checkBox9.Text = "Automatyczne Odświeżanie";
-            checkBox9.UseVisualStyleBackColor = true;
-            // 
-            // checkBox10
-            // 
-            checkBox10.AutoSize = true;
-            checkBox10.Location = new Point(586, 516);
-            checkBox10.Name = "checkBox10";
-            checkBox10.Size = new Size(111, 19);
-            checkBox10.TabIndex = 28;
-            checkBox10.Text = "Numer Telefonu";
-            checkBox10.UseVisualStyleBackColor = true;
-            // 
-            // checkBox11
-            // 
-            checkBox11.AutoSize = true;
-            checkBox11.Location = new Point(504, 516);
-            checkBox11.Name = "checkBox11";
-            checkBox11.Size = new Size(76, 19);
-            checkBox11.TabIndex = 27;
-            checkBox11.Text = "Nazwisko";
-            checkBox11.UseVisualStyleBackColor = true;
-            // 
-            // checkBox12
-            // 
-            checkBox12.AutoSize = true;
-            checkBox12.Location = new Point(449, 516);
-            checkBox12.Name = "checkBox12";
-            checkBox12.Size = new Size(49, 19);
-            checkBox12.TabIndex = 26;
-            checkBox12.Text = "Imię";
-            checkBox12.UseVisualStyleBackColor = true;
             // 
             // buttonBorrowShowBorrows
             // 
@@ -771,6 +748,16 @@
             tabPage3.Text = "Autor";
             tabPage3.UseVisualStyleBackColor = true;
             tabPage3.Click += tabPage3_Click;
+            // 
+            // buttonAutorSearchWithBooks
+            // 
+            buttonAutorSearchWithBooks.Location = new Point(516, 512);
+            buttonAutorSearchWithBooks.Name = "buttonAutorSearchWithBooks";
+            buttonAutorSearchWithBooks.Size = new Size(181, 23);
+            buttonAutorSearchWithBooks.TabIndex = 36;
+            buttonAutorSearchWithBooks.Text = "Pokaż Autorów i ich ksiązki";
+            buttonAutorSearchWithBooks.UseVisualStyleBackColor = true;
+            buttonAutorSearchWithBooks.Click += buttonAutorSearchWithBooks_Click;
             // 
             // buttonDeleteBookFromAutor
             // 
@@ -965,6 +952,8 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(label16);
+            tabPage2.Controls.Add(buttonBookGroupByYear);
             tabPage2.Controls.Add(checkBoxBookRefresh);
             tabPage2.Controls.Add(labelBookFKPublisher);
             tabPage2.Controls.Add(textBoxBookFKPublisher);
@@ -993,6 +982,25 @@
             tabPage2.Text = "Ksiazka";
             tabPage2.UseVisualStyleBackColor = true;
             tabPage2.Click += tabPage2_Click;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(20, 317);
+            label16.Name = "label16";
+            label16.Size = new Size(183, 15);
+            label16.TabIndex = 36;
+            label16.Text = "Ile książek wydano w danym roku";
+            // 
+            // buttonBookGroupByYear
+            // 
+            buttonBookGroupByYear.Location = new Point(20, 335);
+            buttonBookGroupByYear.Name = "buttonBookGroupByYear";
+            buttonBookGroupByYear.Size = new Size(154, 23);
+            buttonBookGroupByYear.TabIndex = 35;
+            buttonBookGroupByYear.Text = "Sprawdź";
+            buttonBookGroupByYear.UseVisualStyleBackColor = true;
+            buttonBookGroupByYear.Click += buttonBookGroupByYear_Click;
             // 
             // checkBoxBookRefresh
             // 
@@ -1357,16 +1365,6 @@
             tabControl1.Size = new Size(894, 573);
             tabControl1.TabIndex = 0;
             // 
-            // buttonAutorSearchWithBooks
-            // 
-            buttonAutorSearchWithBooks.Location = new Point(516, 512);
-            buttonAutorSearchWithBooks.Name = "buttonAutorSearchWithBooks";
-            buttonAutorSearchWithBooks.Size = new Size(181, 23);
-            buttonAutorSearchWithBooks.TabIndex = 36;
-            buttonAutorSearchWithBooks.Text = "Pokaż Autorów i ich ksiązki";
-            buttonAutorSearchWithBooks.UseVisualStyleBackColor = true;
-            buttonAutorSearchWithBooks.Click += buttonAutorSearchWithBooks_Click;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1431,10 +1429,6 @@
         private Label labelWorkerSurname;
         private Label labelWorkerName;
         private TabPage tabPage4;
-        private CheckBox checkBox9;
-        private CheckBox checkBox10;
-        private CheckBox checkBox11;
-        private CheckBox checkBox12;
         private Button buttonBorrowShowBorrows;
         private DataGridView dataGridViewBorrow;
         private Button buttonBorrowDeleteBorrow;
@@ -1517,5 +1511,9 @@
         private Button buttonDeleteBookFromAutor;
         private Button buttonAddBookToAutor;
         private Button buttonAutorSearchWithBooks;
+        private Label label16;
+        private Button buttonBookGroupByYear;
+        private Button buttonBorrowGetTotalBorrows;
+        private Label label17;
     }
 }

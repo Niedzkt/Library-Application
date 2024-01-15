@@ -556,5 +556,55 @@ namespace LibraryApp
             return dataTable;
         }
 
+        public static DataTable GetBooksCountByYear(string year)
+        {
+            string query = @"SELECT rok_wydania, COUNT(id_ksiazki) AS liczba_ksiazek
+                     FROM ksiazka
+                     WHERE rok_wydania = :year
+                     GROUP BY rok_wydania";
+
+            DataTable dataTable = new DataTable();
+
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                using (OracleCommand command = new OracleCommand(query, connection))
+                {
+                    command.Parameters.Add("year", OracleDbType.Int32).Value = int.Parse(year);
+
+                    using (OracleDataAdapter adapter = new OracleDataAdapter(command))
+                    {
+                        connection.Open();
+                        adapter.Fill(dataTable);
+                    }
+                }
+            }
+
+            return dataTable;
+        }
+        public static DataTable GetTotalBorrowsByReader()
+        {
+            string query = @"SELECT c.imie, c.nazwisko, COUNT(w.id_wypozyczenia) AS liczba_wypozyczen
+                     FROM czytelnik c
+                     JOIN wypozyczenie w ON c.id_czytelnika = w.czytelnik_id_czytelnika
+                     GROUP BY c.imie, c.nazwisko";
+
+            DataTable dataTable = new DataTable();
+
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                using (OracleCommand command = new OracleCommand(query, connection))
+                {
+                    using (OracleDataAdapter adapter = new OracleDataAdapter(command))
+                    {
+                        connection.Open();
+                        adapter.Fill(dataTable);
+                    }
+                }
+            }
+
+            return dataTable;
+        }
+
+
     }
 }
