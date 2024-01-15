@@ -282,9 +282,9 @@ namespace LibraryApp
         private void buttonBorrowBorrowBook_Click(object sender, EventArgs e)
         {
             string name = textBoxBorrowCustomerName.Text;
-            string surname = textBoxBorrowCustomerSurname.Text;  
-            string phoneNumber = textBoxBorrowCustomerPhone.Text;  
-            string bookName = textBoxBorrowBookName.Text;        
+            string surname = textBoxBorrowCustomerSurname.Text;
+            string phoneNumber = textBoxBorrowCustomerPhone.Text;
+            string bookName = textBoxBorrowBookName.Text;
 
             DateTime borrowDate;
             DateTime returnDate;
@@ -306,6 +306,31 @@ namespace LibraryApp
 
             DatabaseAccess.BorrowBook(phoneNumber, name, surname, bookName, borrowDate, returnDate);
 
+            RefreshData(null, null);
+        }
+
+        private void buttonBorrowDeleteBorrow_Click(object sender, EventArgs e)
+        {
+            bool isConversionSuccessful = int.TryParse(textBoxBorrowID.Text, out int borrowId);
+            DatabaseAccess.ReturnBook(borrowId);
+            RefreshData(null, null);
+        }
+
+        private void buttonBorrowNewReturnDate_Click(object sender, EventArgs e)
+        {
+            DateTime returnDate;
+            bool isConversionSuccessful = int.TryParse(textBoxBorrowID.Text, out int borrowId);
+            bool isReturnDateValid = DateTime.TryParse(textBoxRealReturnDate.Text, out returnDate);
+            if (!isConversionSuccessful)
+            {
+                MessageBox.Show("Wprowadzony identyfikator wypo¿yczenia jest nieprawid³owy.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            if (!isReturnDateValid)
+            {
+                MessageBox.Show("Data zwrotu jest nieprawid³owa. Proszê wprowadziæ datê w formacie 'RRRR-MM-DD'.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            DatabaseAccess.NewReturnDate(borrowId, returnDate);
             RefreshData(null, null);
         }
     }

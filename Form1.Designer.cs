@@ -61,6 +61,10 @@
             labelWorkerSurname = new Label();
             labelWorkerName = new Label();
             tabPage4 = new TabPage();
+            label9 = new Label();
+            textBoxRealReturnDate = new TextBox();
+            label3 = new Label();
+            textBoxBorrowID = new TextBox();
             label1 = new Label();
             textBoxBorrowReturnDate = new TextBox();
             textBoxBorrowDate = new TextBox();
@@ -135,6 +139,7 @@
             UserSurnameLabel = new Label();
             UserNameLabel = new Label();
             tabControl1 = new TabControl();
+            buttonBorrowNewReturnDate = new Button();
             tabPage7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView6).BeginInit();
             tabPage5.SuspendLayout();
@@ -475,6 +480,11 @@
             // 
             // tabPage4
             // 
+            tabPage4.Controls.Add(buttonBorrowNewReturnDate);
+            tabPage4.Controls.Add(label9);
+            tabPage4.Controls.Add(textBoxRealReturnDate);
+            tabPage4.Controls.Add(label3);
+            tabPage4.Controls.Add(textBoxBorrowID);
             tabPage4.Controls.Add(label1);
             tabPage4.Controls.Add(textBoxBorrowReturnDate);
             tabPage4.Controls.Add(textBoxBorrowDate);
@@ -502,6 +512,38 @@
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Wypozyczenia";
             tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(20, 347);
+            label9.Name = "label9";
+            label9.Size = new Size(103, 15);
+            label9.TabIndex = 39;
+            label9.Text = "Nowa data zwrotu";
+            // 
+            // textBoxRealReturnDate
+            // 
+            textBoxRealReturnDate.Location = new Point(20, 365);
+            textBoxRealReturnDate.Name = "textBoxRealReturnDate";
+            textBoxRealReturnDate.Size = new Size(154, 23);
+            textBoxRealReturnDate.TabIndex = 38;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(20, 303);
+            label3.Name = "label3";
+            label3.Size = new Size(96, 15);
+            label3.TabIndex = 37;
+            label3.Text = "ID Wypożyczenia";
+            // 
+            // textBoxBorrowID
+            // 
+            textBoxBorrowID.Location = new Point(20, 321);
+            textBoxBorrowID.Name = "textBoxBorrowID";
+            textBoxBorrowID.Size = new Size(154, 23);
+            textBoxBorrowID.TabIndex = 36;
             // 
             // label1
             // 
@@ -614,12 +656,13 @@
             // 
             // buttonBorrowDeleteBorrow
             // 
-            buttonBorrowDeleteBorrow.Location = new Point(20, 306);
+            buttonBorrowDeleteBorrow.Location = new Point(20, 423);
             buttonBorrowDeleteBorrow.Name = "buttonBorrowDeleteBorrow";
             buttonBorrowDeleteBorrow.Size = new Size(154, 23);
             buttonBorrowDeleteBorrow.TabIndex = 23;
             buttonBorrowDeleteBorrow.Text = "Zwrot książki";
             buttonBorrowDeleteBorrow.UseVisualStyleBackColor = true;
+            buttonBorrowDeleteBorrow.Click += buttonBorrowDeleteBorrow_Click;
             // 
             // label7
             // 
@@ -1233,6 +1276,16 @@
             tabControl1.Size = new Size(894, 573);
             tabControl1.TabIndex = 0;
             // 
+            // buttonBorrowNewReturnDate
+            // 
+            buttonBorrowNewReturnDate.Location = new Point(20, 394);
+            buttonBorrowNewReturnDate.Name = "buttonBorrowNewReturnDate";
+            buttonBorrowNewReturnDate.Size = new Size(154, 23);
+            buttonBorrowNewReturnDate.TabIndex = 40;
+            buttonBorrowNewReturnDate.Text = "Przedłuż wypożyczenie";
+            buttonBorrowNewReturnDate.UseVisualStyleBackColor = true;
+            buttonBorrowNewReturnDate.Click += buttonBorrowNewReturnDate_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1371,5 +1424,10 @@
         private TextBox textBoxBorrowBookName;
         private Label label2;
         private Label label12;
+        private Label label9;
+        private TextBox textBoxRealReturnDate;
+        private Label label3;
+        private TextBox textBoxBorrowID;
+        private Button buttonBorrowNewReturnDate;
     }
 }

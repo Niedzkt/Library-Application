@@ -361,7 +361,7 @@ namespace LibraryApp
 
         public static DataTable ShowBorrows()
         {
-            string query = @"SELECT w.id_wypozyczenia, c.imie, c.nazwisko, c.numer_telefonu, w.data_wypozyczenia, k.tytul
+            string query = @"SELECT w.id_wypozyczenia, c.imie, c.nazwisko, c.numer_telefonu, w.data_wypozyczenia, w.data_zwrotu, k.tytul
                      FROM czytelnik c
                      JOIN wypozyczenie w ON c.id_czytelnika = w.czytelnik_id_czytelnika
                      JOIN ksiazka k ON w.ksiazka_id_ksiazki = k.id_ksiazki";
@@ -384,13 +384,36 @@ namespace LibraryApp
             return dataTable;
         }
 
-        public static void ZwrocKsiazke(int borrowId, DateTime returnDate)
+        public static void NewReturnDate(int borrowId, DateTime returnDate)
         {
-            string query = @"UPDATE wypozyczenie SET data_zwrotu = :returnDate WHERE id_wypozyczenia = :idWypozyczenia";
+            string query = @"UPDATE wypozyczenie SET data_zwrotu = :returnDate WHERE id_wypozyczenia = :borrowId";
 
-            // Tutaj kod do wykonania zapytania z wykorzystaniem OracleCommand, przekazując odpowiednie parametry
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                using (OracleCommand command = new OracleCommand(query, connection))
+                {
+                    command.Parameters.Add("returnDate", OracleDbType.Date).Value = returnDate;
+                    command.Parameters.Add("borrowId", OracleDbType.Int32).Value = borrowId;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
+        public static void ReturnBook(int borrowId)
+        {
+            string query = @"DELETE FROM wypozyczenie WHERE id_wypozyczenia = :borrowId";
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                using (OracleCommand command = new OracleCommand(query, connection))
+                {
+                    command.Parameters.Add("borrowId", OracleDbType.Int32).Value = borrowId;
 
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
