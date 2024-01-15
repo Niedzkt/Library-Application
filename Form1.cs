@@ -1,3 +1,5 @@
+using System.Data;
+
 namespace LibraryApp
 {
     public partial class Form1 : Form
@@ -90,6 +92,23 @@ namespace LibraryApp
             {
                 var dataTable = DatabaseAccess.ShowBorrows();
                 dataGridViewBorrow.DataSource = dataTable;
+            }
+
+            if (tabControl1.SelectedTab == tabPage3)
+            {
+                string query = "SELECT ";
+                if (checkBoxBookName.Checked) query += "imie, ";
+                if (checkBoxBookYear.Checked) query += "nazwisko, ";
+                if (checkBoxBookCategory.Checked) query += "data_urodzenia, ";
+                query = query.TrimEnd(',', ' ') + " FROM AUTOR";
+
+                if (!checkBoxAutorName.Checked && !checkBoxAutorSurname.Checked && !checkBoxAutorDateOfBirth.Checked)
+                {
+                    query = "SELECT imie, nazwisko, data_urodzenia FROM AUTOR";
+                }
+
+                var dataTable = DatabaseAccess.ExecuteQuery(query);
+                dataGridViewAutor.DataSource = dataTable;
             }
         }
 
@@ -312,6 +331,10 @@ namespace LibraryApp
         private void buttonBorrowDeleteBorrow_Click(object sender, EventArgs e)
         {
             bool isConversionSuccessful = int.TryParse(textBoxBorrowID.Text, out int borrowId);
+            if (!isConversionSuccessful)
+            {
+                MessageBox.Show("Wprowadzony identyfikator wypo¿yczenia jest nieprawid³owy.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             DatabaseAccess.ReturnBook(borrowId);
             RefreshData(null, null);
         }
@@ -332,6 +355,96 @@ namespace LibraryApp
 
             DatabaseAccess.NewReturnDate(borrowId, returnDate);
             RefreshData(null, null);
+        }
+
+        private void buttonAutorAdd_Click(object sender, EventArgs e)
+        {
+            string name = textBoxAutorName.Text;
+            string surname = textBoxAutorSurname.Text;
+            DateTime dateOfBirth;
+            bool isDateOfBirthValid = DateTime.TryParse(textBoxAutorBirth.Text, out dateOfBirth);
+            if (!isDateOfBirthValid)
+            {
+                MessageBox.Show("Data urodzenia jest nieprawid³owa. Proszê wprowadziæ datê w formacie 'RRRR-MM-DD'.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            DatabaseAccess.AddAutor(name, surname, dateOfBirth);
+            RefreshData(null, null);
+        }
+
+        private void buttonAutorSearch_Click(object sender, EventArgs e)
+        {
+            string name = textBoxAutorName.Text;
+            string surname = textBoxAutorSurname.Text;
+            DateTime dateOfBirth;
+            bool isDateOfBirthValid = DateTime.TryParse(textBoxAutorBirth.Text, out dateOfBirth);
+            if (!isDateOfBirthValid)
+            {
+                MessageBox.Show("Data urodzenia jest nieprawid³owa. Proszê wprowadziæ datê w formacie 'RRRR-MM-DD'.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            var dataTable = DatabaseAccess.SearchAutor(name, surname, dateOfBirth);
+            dataGridViewAutor.DataSource = dataTable;
+        }
+
+        private void buttonAutorDelete_Click(object sender, EventArgs e)
+        {
+            string name = textBoxAutorName.Text;
+            string surname = textBoxAutorSurname.Text;
+            DateTime dateOfBirth;
+            bool isDateOfBirthValid = DateTime.TryParse(textBoxAutorBirth.Text, out dateOfBirth);
+            if (!isDateOfBirthValid)
+            {
+                MessageBox.Show("Data urodzenia jest nieprawid³owa. Proszê wprowadziæ datê w formacie 'RRRR-MM-DD'.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            DatabaseAccess.DeleteAutor(name, surname, dateOfBirth);
+            RefreshData(null, null);
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            RefreshData(null, null);
+        }
+
+        private void buttonAddBookToAutor_Click(object sender, EventArgs e)
+        {
+            string bookName = textBoxAutorBookName.Text;
+            string bookYear = textBoxAutorBookYear.Text;
+            string name = textBoxAutorName.Text;
+            string surname = textBoxAutorSurname.Text;
+            DateTime dateOfBirth;
+            bool isDateOfBirthValid = DateTime.TryParse(textBoxAutorBirth.Text, out dateOfBirth);
+            if (!isDateOfBirthValid)
+            {
+                MessageBox.Show("Data urodzenia jest nieprawid³owa. Proszê wprowadziæ datê w formacie 'RRRR-MM-DD'.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            DatabaseAccess.AddRelationAutorBook(bookName, bookYear, name, surname, dateOfBirth);
+        }
+
+        private void textBoxAutorBookYear_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonDeleteBookFromAutor_Click(object sender, EventArgs e)
+        {
+            string bookName = textBoxAutorBookName.Text;
+            string bookYear = textBoxAutorBookYear.Text;
+            string name = textBoxAutorName.Text;
+            string surname = textBoxAutorSurname.Text;
+            DateTime dateOfBirth;
+            bool isDateOfBirthValid = DateTime.TryParse(textBoxAutorBirth.Text, out dateOfBirth);
+            if (!isDateOfBirthValid)
+            {
+                MessageBox.Show("Data urodzenia jest nieprawid³owa. Proszê wprowadziæ datê w formacie 'RRRR-MM-DD'.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            DatabaseAccess.RemoveRelationAutorBook(bookName, bookYear, name, surname, dateOfBirth);
+        }
+
+        private void buttonAutorSearchWithBooks_Click(object sender, EventArgs e)
+        {
+            var dataTable = DatabaseAccess.GetAuthorAndBookDetails();
+            dataGridViewAutor.DataSource = dataTable;
         }
     }
 }

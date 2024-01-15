@@ -89,14 +89,14 @@ namespace LibraryApp
 
         public static void AddWorker(string name, string surname, string position)
         {
-            
+
             string query = "INSERT INTO PRACOWNIK (imie, nazwisko, stanowisko) VALUES (:name, :surname, :position)";
 
             using (OracleConnection connection = new OracleConnection(connectionString))
             {
                 using (OracleCommand command = new OracleCommand(query, connection))
                 {
-               
+
                     command.Parameters.Add("name", OracleDbType.Varchar2).Value = name;
                     command.Parameters.Add("surname", OracleDbType.Varchar2).Value = surname;
                     command.Parameters.Add("position", OracleDbType.Varchar2).Value = position;
@@ -208,7 +208,7 @@ namespace LibraryApp
             }
         }
 
-        public static void AddAutor(string name, string surname, string dateOfBirth)
+        public static void AddAutor(string name, string surname, DateTime dateOfBirth)
         {
 
             string query = "INSERT INTO AUTOR (imie, nazwisko, data_urodzenia) VALUES (:name, :surname, :dateOfBirth)";
@@ -220,14 +220,14 @@ namespace LibraryApp
 
                     command.Parameters.Add("name", OracleDbType.Varchar2).Value = name;
                     command.Parameters.Add("surname", OracleDbType.Varchar2).Value = surname;
-                    command.Parameters.Add("dateOfBirth", OracleDbType.Varchar2).Value = dateOfBirth;
+                    command.Parameters.Add("dateOfBirth", OracleDbType.Date).Value = dateOfBirth;
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        public static void DeleteAutor(string name, string surname, string dateOfBirth)
+        public static void DeleteAutor(string name, string surname, DateTime dateOfBirth)
         {
             string query = "DELETE FROM AUTOR WHERE imie=:name AND nazwisko=:surname AND data_urodzenia=:dateOfBirth";
 
@@ -237,14 +237,14 @@ namespace LibraryApp
                 {
                     command.Parameters.Add("name", OracleDbType.Varchar2).Value = name;
                     command.Parameters.Add("surname", OracleDbType.Varchar2).Value = surname;
-                    command.Parameters.Add("dateOfBirth", OracleDbType.Varchar2).Value = dateOfBirth;
+                    command.Parameters.Add("dateOfBirth", OracleDbType.Date).Value = dateOfBirth;
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        public static DataTable SearchAutor(string name, string surname, string dateOfBirth)
+        public static DataTable SearchAutor(string name, string surname, DateTime dateOfBirth)
         {
             string query = "SELECT imie, nazwisko, data_urodzenia FROM AUTOR WHERE imie=:name AND nazwisko=:surname AND data_urodzenia=:dateOfBirth";
 
@@ -254,7 +254,7 @@ namespace LibraryApp
                 {
                     command.Parameters.Add("name", OracleDbType.Varchar2).Value = name;
                     command.Parameters.Add("surname", OracleDbType.Varchar2).Value = surname;
-                    command.Parameters.Add("dateOfBirth", OracleDbType.Varchar2).Value = dateOfBirth;
+                    command.Parameters.Add("dateOfBirth", OracleDbType.Date).Value = dateOfBirth;
                     connection.Open();
 
                     using (OracleDataAdapter adapter = new OracleDataAdapter(command))
@@ -330,11 +330,11 @@ namespace LibraryApp
         }
 
         public static void BorrowBook(
-            string phoneNumber, 
-            string name, 
-            string surname, 
-            string bookName, 
-            DateTime borrowDate, 
+            string phoneNumber,
+            string name,
+            string surname,
+            string bookName,
+            DateTime borrowDate,
             DateTime returnDate)
         {
             string query = @"INSERT INTO wypozyczenie (data_wypozyczenia, data_zwrotu, czytelnik_id_czytelnika, ksiazka_id_ksiazki)
@@ -415,5 +415,146 @@ namespace LibraryApp
                 }
             }
         }
+
+        public static void AddRelationAutorBook(string bookName, string bookYear, string name, string surname, DateTime dateOfBirth)
+        {
+            string queryFindBook = @"SELECT id_ksiazki FROM ksiazka WHERE tytul = :bookName AND rok_wydania = :bookYear";
+            string queryFindAutor = @"SELECT id_autora FROM autor WHERE imie = :name AND nazwisko = :surname AND data_urodzenia = :dateOfBirth";
+            string queryAddRelation = @"INSERT INTO relacja_autor_ksiazka (autor_id_autora, ksiazka_id_ksiazki) VALUES (:idAutor, :idBook)";
+
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                connection.Open();
+
+                int idBook, idAutor;
+
+                using (OracleCommand command = new OracleCommand(queryFindBook, connection))
+                {
+                    command.Parameters.Add("bookName", OracleDbType.Varchar2).Value = bookName;
+                    command.Parameters.Add("bookYear", OracleDbType.Int32).Value = bookYear;
+
+                    using (OracleDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            idBook = int.Parse(reader["id_ksiazki"].ToString());
+                        }
+                        else
+                        {
+                            throw new Exception("Książka nie została znaleziona.");
+                        }
+                    }
+                }
+                using (OracleCommand command = new OracleCommand(queryFindAutor, connection))
+                {
+                    command.Parameters.Add("name", OracleDbType.Varchar2).Value = name;
+                    command.Parameters.Add("surname", OracleDbType.Varchar2).Value = surname;
+                    command.Parameters.Add("dateOfBirth", OracleDbType.Date).Value = dateOfBirth;
+
+                    using (OracleDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            idAutor = int.Parse(reader["id_autora"].ToString());
+
+                        }
+
+                        else
+                        {
+                            throw new Exception("Autor nie został znaleziony.");
+                        }
+                    }
+                }
+                using (OracleCommand command = new OracleCommand(queryAddRelation, connection))
+                {
+                    command.Parameters.Add("idAutor", OracleDbType.Int32).Value = idAutor;
+                    command.Parameters.Add("idBook", OracleDbType.Int32).Value = idBook;
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void RemoveRelationAutorBook(string bookName, string bookYear, string name, string surname, DateTime dateOfBirth)
+        {
+            string queryFindBook = @"SELECT id_ksiazki FROM ksiazka WHERE tytul = :bookName AND rok_wydania = :bookYear";
+            string queryFindAutor = @"SELECT id_autora FROM autor WHERE imie = :name AND nazwisko = :surname AND data_urodzenia = :dateOfBirth";
+            string queryRemoveRelation = @"DELETE FROM relacja_autor_ksiazka WHERE autor_id_autora = :idAutor AND ksiazka_id_ksiazki = :idBook";
+
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                connection.Open();
+
+                int idBook, idAutor;
+
+                using (OracleCommand command = new OracleCommand(queryFindBook, connection))
+                {
+                    command.Parameters.Add("bookName", OracleDbType.Varchar2).Value = bookName;
+                    command.Parameters.Add("bookYear", OracleDbType.Int32).Value = bookYear;
+
+                    using (OracleDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            idBook = int.Parse(reader["id_ksiazki"].ToString());
+                        }
+                        else
+                        {
+                            throw new Exception("Książka nie została znaleziona.");
+                        }
+                    }
+                }
+                using (OracleCommand command = new OracleCommand(queryFindAutor, connection))
+                {
+                    command.Parameters.Add("name", OracleDbType.Varchar2).Value = name;
+                    command.Parameters.Add("surname", OracleDbType.Varchar2).Value = surname;
+                    command.Parameters.Add("dateOfBirth", OracleDbType.Date).Value = dateOfBirth;
+
+                    using (OracleDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            idAutor = int.Parse(reader["id_autora"].ToString());
+                        }
+                        else
+                        {
+                            throw new Exception("Autor nie został znaleziony.");
+                        }
+                    }
+                }
+                using (OracleCommand command = new OracleCommand(queryRemoveRelation, connection))
+                {
+                    command.Parameters.Add("idAutor", OracleDbType.Int32).Value = idAutor;
+                    command.Parameters.Add("idBook", OracleDbType.Int32).Value = idBook;
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static DataTable GetAuthorAndBookDetails()
+        {
+            string query = @"SELECT a.imie, a.nazwisko, a.data_urodzenia, k.tytul, k.rok_wydania
+                     FROM autor a
+                     JOIN relacja_autor_ksiazka r ON a.id_autora = r.autor_id_autora
+                     JOIN ksiazka k ON r.ksiazka_id_ksiazki = k.id_ksiazki";
+
+            DataTable dataTable = new DataTable();
+
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                using (OracleCommand command = new OracleCommand(query, connection))
+                {
+                    using (OracleDataAdapter adapter = new OracleDataAdapter(command))
+                    {
+                        connection.Open();
+                        adapter.Fill(dataTable);
+                    }
+                }
+            }
+
+            return dataTable;
+        }
+
     }
 }
