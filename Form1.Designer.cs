@@ -28,22 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tabPage7 = new TabPage();
-            checkBox17 = new CheckBox();
-            checkBox18 = new CheckBox();
-            checkBox19 = new CheckBox();
-            checkBox20 = new CheckBox();
-            button21 = new Button();
-            dataGridView6 = new DataGridView();
-            button22 = new Button();
-            button23 = new Button();
-            label13 = new Label();
-            textBox13 = new TextBox();
-            textBox14 = new TextBox();
-            textBox15 = new TextBox();
-            button24 = new Button();
-            label14 = new Label();
-            label15 = new Label();
             tabPage5 = new TabPage();
             checkBoxWorkerAutoRefresh = new CheckBox();
             checkBoxWorkerPosition = new CheckBox();
@@ -147,8 +131,7 @@
             UserSurnameLabel = new Label();
             UserNameLabel = new Label();
             tabControl1 = new TabControl();
-            tabPage7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView6).BeginInit();
+            buttonUserProcedureAdd = new Button();
             tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewWorker).BeginInit();
             tabPage4.SuspendLayout();
@@ -161,165 +144,6 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             tabControl1.SuspendLayout();
             SuspendLayout();
-            // 
-            // tabPage7
-            // 
-            tabPage7.Controls.Add(checkBox17);
-            tabPage7.Controls.Add(checkBox18);
-            tabPage7.Controls.Add(checkBox19);
-            tabPage7.Controls.Add(checkBox20);
-            tabPage7.Controls.Add(button21);
-            tabPage7.Controls.Add(dataGridView6);
-            tabPage7.Controls.Add(button22);
-            tabPage7.Controls.Add(button23);
-            tabPage7.Controls.Add(label13);
-            tabPage7.Controls.Add(textBox13);
-            tabPage7.Controls.Add(textBox14);
-            tabPage7.Controls.Add(textBox15);
-            tabPage7.Controls.Add(button24);
-            tabPage7.Controls.Add(label14);
-            tabPage7.Controls.Add(label15);
-            tabPage7.Location = new Point(4, 24);
-            tabPage7.Name = "tabPage7";
-            tabPage7.Padding = new Padding(3);
-            tabPage7.Size = new Size(886, 545);
-            tabPage7.TabIndex = 6;
-            tabPage7.Text = "Adres";
-            tabPage7.UseVisualStyleBackColor = true;
-            // 
-            // checkBox17
-            // 
-            checkBox17.AutoSize = true;
-            checkBox17.Location = new Point(271, 516);
-            checkBox17.Name = "checkBox17";
-            checkBox17.Size = new Size(172, 19);
-            checkBox17.TabIndex = 29;
-            checkBox17.Text = "Automatyczne Odświeżanie";
-            checkBox17.UseVisualStyleBackColor = true;
-            // 
-            // checkBox18
-            // 
-            checkBox18.AutoSize = true;
-            checkBox18.Location = new Point(586, 516);
-            checkBox18.Name = "checkBox18";
-            checkBox18.Size = new Size(111, 19);
-            checkBox18.TabIndex = 28;
-            checkBox18.Text = "Numer Telefonu";
-            checkBox18.UseVisualStyleBackColor = true;
-            // 
-            // checkBox19
-            // 
-            checkBox19.AutoSize = true;
-            checkBox19.Location = new Point(504, 516);
-            checkBox19.Name = "checkBox19";
-            checkBox19.Size = new Size(76, 19);
-            checkBox19.TabIndex = 27;
-            checkBox19.Text = "Nazwisko";
-            checkBox19.UseVisualStyleBackColor = true;
-            // 
-            // checkBox20
-            // 
-            checkBox20.AutoSize = true;
-            checkBox20.Location = new Point(449, 516);
-            checkBox20.Name = "checkBox20";
-            checkBox20.Size = new Size(49, 19);
-            checkBox20.TabIndex = 26;
-            checkBox20.Text = "Imię";
-            checkBox20.UseVisualStyleBackColor = true;
-            // 
-            // button21
-            // 
-            button21.Location = new Point(703, 512);
-            button21.Name = "button21";
-            button21.Size = new Size(164, 23);
-            button21.TabIndex = 25;
-            button21.Text = "Wyświetl Użytkowników";
-            button21.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView6
-            // 
-            dataGridView6.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView6.GridColor = SystemColors.ControlLight;
-            dataGridView6.Location = new Point(271, 28);
-            dataGridView6.Name = "dataGridView6";
-            dataGridView6.RowTemplate.Height = 25;
-            dataGridView6.Size = new Size(596, 478);
-            dataGridView6.TabIndex = 24;
-            // 
-            // button22
-            // 
-            button22.Location = new Point(20, 203);
-            button22.Name = "button22";
-            button22.Size = new Size(154, 23);
-            button22.TabIndex = 23;
-            button22.Text = "Usuń Użytkownika";
-            button22.UseVisualStyleBackColor = true;
-            // 
-            // button23
-            // 
-            button23.Location = new Point(20, 174);
-            button23.Name = "button23";
-            button23.Size = new Size(154, 23);
-            button23.TabIndex = 22;
-            button23.Text = "Wyszukaj Użytkownika";
-            button23.UseVisualStyleBackColor = true;
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Location = new Point(20, 98);
-            label13.Name = "label13";
-            label13.Size = new Size(91, 15);
-            label13.TabIndex = 21;
-            label13.Text = "Numer telefonu";
-            // 
-            // textBox13
-            // 
-            textBox13.Location = new Point(20, 116);
-            textBox13.Name = "textBox13";
-            textBox13.Size = new Size(154, 23);
-            textBox13.TabIndex = 20;
-            // 
-            // textBox14
-            // 
-            textBox14.Location = new Point(20, 72);
-            textBox14.Name = "textBox14";
-            textBox14.Size = new Size(154, 23);
-            textBox14.TabIndex = 17;
-            // 
-            // textBox15
-            // 
-            textBox15.Location = new Point(20, 28);
-            textBox15.Name = "textBox15";
-            textBox15.Size = new Size(154, 23);
-            textBox15.TabIndex = 15;
-            // 
-            // button24
-            // 
-            button24.Location = new Point(20, 145);
-            button24.Name = "button24";
-            button24.Size = new Size(154, 23);
-            button24.TabIndex = 19;
-            button24.Text = "Dodaj Użytkownika";
-            button24.UseVisualStyleBackColor = true;
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Location = new Point(20, 54);
-            label14.Name = "label14";
-            label14.Size = new Size(57, 15);
-            label14.TabIndex = 18;
-            label14.Text = "Nazwisko";
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Location = new Point(20, 10);
-            label15.Name = "label15";
-            label15.Size = new Size(30, 15);
-            label15.TabIndex = 16;
-            label15.Text = "Imię";
             // 
             // tabPage5
             // 
@@ -821,6 +645,7 @@
             checkBoxAutorAutoRefresh.TabIndex = 29;
             checkBoxAutorAutoRefresh.Text = "Automatyczne Odświeżanie";
             checkBoxAutorAutoRefresh.UseVisualStyleBackColor = true;
+            checkBoxAutorAutoRefresh.CheckedChanged += checkBoxAutorAutoRefresh_CheckedChanged;
             // 
             // checkBoxAutorDateOfBirth
             // 
@@ -1185,6 +1010,7 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(buttonUserProcedureAdd);
             tabPage1.Controls.Add(checkBoxAutoRefresh);
             tabPage1.Controls.Add(UserPhoneCheckBox);
             tabPage1.Controls.Add(UserSurnameCheckBox);
@@ -1358,12 +1184,21 @@
             tabControl1.Controls.Add(tabPage3);
             tabControl1.Controls.Add(tabPage4);
             tabControl1.Controls.Add(tabPage5);
-            tabControl1.Controls.Add(tabPage7);
             tabControl1.Location = new Point(-7, -3);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(894, 573);
             tabControl1.TabIndex = 0;
+            // 
+            // buttonUserProcedureAdd
+            // 
+            buttonUserProcedureAdd.Location = new Point(15, 225);
+            buttonUserProcedureAdd.Name = "buttonUserProcedureAdd";
+            buttonUserProcedureAdd.Size = new Size(228, 23);
+            buttonUserProcedureAdd.TabIndex = 15;
+            buttonUserProcedureAdd.Text = "Dodaj Użytkownika (PROCEDURA)";
+            buttonUserProcedureAdd.UseVisualStyleBackColor = true;
+            buttonUserProcedureAdd.Click += buttonUserProcedureAdd_Click;
             // 
             // Form1
             // 
@@ -1373,9 +1208,6 @@
             Controls.Add(tabControl1);
             Name = "Form1";
             Text = "LibraryApp";
-            tabPage7.ResumeLayout(false);
-            tabPage7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView6).EndInit();
             tabPage5.ResumeLayout(false);
             tabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewWorker).EndInit();
@@ -1396,22 +1228,6 @@
         }
 
         #endregion
-        private TabPage tabPage7;
-        private CheckBox checkBox17;
-        private CheckBox checkBox18;
-        private CheckBox checkBox19;
-        private CheckBox checkBox20;
-        private Button button21;
-        private DataGridView dataGridView6;
-        private Button button22;
-        private Button button23;
-        private Label label13;
-        private TextBox textBox13;
-        private TextBox textBox14;
-        private TextBox textBox15;
-        private Button button24;
-        private Label label14;
-        private Label label15;
         private TabPage tabPage5;
         private CheckBox checkBoxWorkerAutoRefresh;
         private CheckBox checkBoxWorkerPosition;
@@ -1515,5 +1331,6 @@
         private Button buttonBookGroupByYear;
         private Button buttonBorrowGetTotalBorrows;
         private Label label17;
+        private Button buttonUserProcedureAdd;
     }
 }

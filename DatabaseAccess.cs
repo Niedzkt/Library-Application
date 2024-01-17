@@ -146,68 +146,6 @@ namespace LibraryApp
             }
         }
 
-        public static void AddAddress(string street, string address, string city, string postcode)
-        {
-
-            string query = "INSERT INTO ADRES (ulica, mieszkanie, miejscowosc, kod_pocztowy) VALUES (:street, :address, :city, :postcode)";
-
-            using (OracleConnection connection = new OracleConnection(connectionString))
-            {
-                using (OracleCommand command = new OracleCommand(query, connection))
-                {
-
-                    command.Parameters.Add("street", OracleDbType.Varchar2).Value = street;
-                    command.Parameters.Add("address", OracleDbType.Varchar2).Value = address;
-                    command.Parameters.Add("city", OracleDbType.Varchar2).Value = city;
-                    command.Parameters.Add("postcode", OracleDbType.Varchar2).Value = postcode;
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public static void DeleteAddress(string street, string address, string city, string postcode)
-        {
-            string query = "DELETE FROM ADRES WHERE ulica=:street AND mieszkanie=:address AND miejscowosc=:city AND kod_pocztowy=:postcode";
-
-            using (OracleConnection connection = new OracleConnection(connectionString))
-            {
-                using (OracleCommand command = new OracleCommand(query, connection))
-                {
-                    command.Parameters.Add("street", OracleDbType.Varchar2).Value = street;
-                    command.Parameters.Add("address", OracleDbType.Varchar2).Value = address;
-                    command.Parameters.Add("city", OracleDbType.Varchar2).Value = city;
-                    command.Parameters.Add("postcode", OracleDbType.Varchar2).Value = postcode;
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public static DataTable SearchAddress(string street, string address, string city, string postcode)
-        {
-            string query = "SELECT ulica, mieszkanie, miejscowosc, kod_pocztowy FROM ADRES WHERE ulica=:street AND mieszkanie=:address AND miejscowosc=:city AND kod_pocztowy=:postcode";
-
-            using (OracleConnection connection = new OracleConnection(connectionString))
-            {
-                using (OracleCommand command = new OracleCommand(query, connection))
-                {
-                    command.Parameters.Add("street", OracleDbType.Varchar2).Value = street;
-                    command.Parameters.Add("address", OracleDbType.Varchar2).Value = address;
-                    command.Parameters.Add("city", OracleDbType.Varchar2).Value = city;
-                    command.Parameters.Add("postcode", OracleDbType.Varchar2).Value = postcode;
-                    connection.Open();
-
-                    using (OracleDataAdapter adapter = new OracleDataAdapter(command))
-                    {
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-                        return dataTable;
-                    }
-                }
-            }
-        }
-
         public static void AddAutor(string name, string surname, DateTime dateOfBirth)
         {
 
@@ -581,6 +519,7 @@ namespace LibraryApp
 
             return dataTable;
         }
+
         public static DataTable GetTotalBorrowsByReader()
         {
             string query = @"SELECT c.imie, c.nazwisko, COUNT(w.id_wypozyczenia) AS liczba_wypozyczen

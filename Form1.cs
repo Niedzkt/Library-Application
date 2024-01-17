@@ -1,9 +1,11 @@
+using Oracle.ManagedDataAccess.Client;
 using System.Data;
 
 namespace LibraryApp
 {
     public partial class Form1 : Form
     {
+        private static readonly string connectionString = @"DATA SOURCE=192.168.1.21:1521/XE;" + "USER ID=libdb; PASSWORD=passwordlib";
         private System.Windows.Forms.Timer refreshTimer;
 
         public Form1()
@@ -13,6 +15,7 @@ namespace LibraryApp
             this.dataGridViewBook.BackgroundColor = Color.White;
             this.dataGridViewWorker.BackgroundColor = Color.White;
             this.dataGridViewBorrow.BackgroundColor = Color.White;
+            this.dataGridViewAutor.BackgroundColor = Color.White;
             InitializeRefreshTimer();
         }
 
@@ -97,9 +100,9 @@ namespace LibraryApp
             if (tabControl1.SelectedTab == tabPage3)
             {
                 string query = "SELECT ";
-                if (checkBoxBookName.Checked) query += "imie, ";
-                if (checkBoxBookYear.Checked) query += "nazwisko, ";
-                if (checkBoxBookCategory.Checked) query += "data_urodzenia, ";
+                if (checkBoxAutorName.Checked) query += "imie, ";
+                if (checkBoxAutorSurname.Checked) query += "nazwisko, ";
+                if (checkBoxAutorDateOfBirth.Checked) query += "data_urodzenia, ";
                 query = query.TrimEnd(',', ' ') + " FROM AUTOR";
 
                 if (!checkBoxAutorName.Checked && !checkBoxAutorSurname.Checked && !checkBoxAutorDateOfBirth.Checked)
@@ -463,6 +466,34 @@ namespace LibraryApp
         {
             var dataTable = DatabaseAccess.GetTotalBorrowsByReader();
             dataGridViewBorrow.DataSource = dataTable;
+        }
+
+        private void checkBoxAutorAutoRefresh_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxAutorAutoRefresh.Checked)
+            {
+                refreshTimer.Start();
+            }
+            else { refreshTimer.Stop(); }
+        }
+
+        private void buttonUserProcedureAdd_Click(object sender, EventArgs e)
+        {
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                using (OracleCommand command = new OracleCommand("AddReader", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.Add("p_imie", OracleDbType.Varchar2).Value = UserNameTextBox.Text;
+                    command.Parameters.Add("p_nazwisko", OracleDbType.Varchar2).Value = UserSurnameTextBox.Text;
+                    command.Parameters.Add("p_numer_telefonu", OracleDbType.Varchar2).Value = UserPhoneTextBox.Text;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            RefreshData(null, null);
         }
     }
 }
