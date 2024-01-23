@@ -11,7 +11,7 @@ namespace LibraryApp
 {
     public class DatabaseAccess
     {
-        private static readonly string connectionString = @"DATA SOURCE=192.168.1.21:1521/XE;" + "USER ID=libdb; PASSWORD=passwordlib";
+        private static readonly string connectionString = @"DATA SOURCE=localhost:1521/XE;" + "USER ID=libdb; PASSWORD=passwordlib";
 
         public static DataTable ExecuteQuery(string query)
         {
